@@ -1,5 +1,0 @@
-1  Перейти в терминале в папку stock_products
-
-2. Запустить команду docker build . --tag=app
-
-3. Запустить команду docker run --name app_conteiner -d -p 8000:8000 app
