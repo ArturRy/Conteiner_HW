@@ -5,8 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # restart: always
-    command: /app gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
+    restart: always
+    command: >
+            /bin/sh -c  "
+            python manage.py collectstatic --no-input && python manage.py migrate
+            && gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - static_volume:/app/static
     expose:
@@ -26,7 +29,7 @@ services:
     volumes:
       - static_volume:/app/static
     ports:
-      - 1337:80
+      - 8001:80
     depends_on:
       - web
 
@@ -34,5 +37,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
-
 
